@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize static %}
+{% block title %}
+    {% trans "Car information" %}
+{% endblock title %}
+{% block css %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+{% endblock css %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8 gy-3 g-3 mt-0 mb-3">
+            <div class="card-custom bg-base shadow-effect rounded-4 text-center">
+                <div class="row">
+                    <div class="col">
+                        <div class="mt-3">
+                            <div class="swiper mySwiper sw-color">
+                                <div class="swiper-wrapper">
+                                    {% for img in car.photo_set.all %}
+                                        <div class="swiper-slide">
+                                            <img src="{{ img.photo.url }}"
+                                                 class="rounded-4"
+                                                 width="800"
+                                                 height="450"
+                                                 alt="{{ car.name }}" />
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="swiper-button-prev ms-4 ps-4"></div>
+                                <div class="swiper-button-next me-4 pe-4"></div>
+                            </div>
+                        </div>
+                        <div class="card-custom-content p-4">
+                            <h4>{{ car.car_brand.name }} {{ car.car_model }}</h4>
+                            <p>
+                                {{ car.price|intcomma }} <i class="fa-solid fa-ruble-sign"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/next_slide.js' %}"></script>
+{% endblock js %}

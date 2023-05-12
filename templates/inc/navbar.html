@@ -1,0 +1,44 @@
+{% load i18n crispy_forms_tags %}
+<nav class="navbar bg-white navbar-expand-lg mb-2">
+    <div class="container">
+        <a class="navbar-brand text-brand" href="{% url 'cars' %}">
+            <i class="fa-solid fa-a"></i><i class="fa-solid fa-u"></i><i class="fa-solid fa-t"></i><i class="fa-solid fa-o"></i><i class="fa-solid fa-d"></i><i class="fa-solid fa-e"></i><i class="fa-solid fa-a"></i><i class="fa-solid fa-l"></i><i class="fa-solid fa-e"></i><i class="fa-solid fa-r"></i>
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    {% url "cars" as cars_url %}
+                    <a class="nav-link {% if request.path == cars_url %}active{% endif %}"
+                       href="{{ cars_url }}"><i class="fa-solid fa-car"></i> {% trans "Cars" %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url "brands" as brands_url %}
+                    <a class="nav-link {% if request.path == brands_url %}active{% endif %}"
+                       href="{{ brands_url }}"><i class="fa-solid fa-copyright"></i> {% trans "Brands" %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url "reviews" as reviews_url %}
+                    <a class="nav-link {% if request.path == reviews_url %}active{% endif %}"
+                       href="{{ reviews_url }}"><i class="fa-solid fa-message"></i> {% trans "Reviews" %}</a>
+                </li>
+                <li class="nav-item">
+                    {% url "contacts" as contacts_url %}
+                    <a class="nav-link {% if request.path == contacts_url %}active{% endif %}"
+                       href="{{ contacts_url }}"><i class="fa-solid fa-address-card"></i> {% trans "Contacts" %}</a>
+                </li>
+            </ul>
+            {% url "callback" as callback_url %}
+            <a class="nav-link {% if request.path == callback_url %}active{% endif %}"
+               href="{{ callback_url }}"><i class="fa-solid fa-phone-volume"></i> {% trans "Callback" %}</a>
+        </div>
+    </div>
+</nav>

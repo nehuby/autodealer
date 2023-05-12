@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags static %}
+{% block title %}
+    {% trans "Reviews" %}
+{% endblock title %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock css %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="bg-base shadow-effect p-4 rounded-4 my-2">
+                <div class="fs-3 text-center">{% trans "Reviews" %}</div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-brand w-100">{% trans "Send" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card-custom bg-base shadow-effect rounded-4 my-2">
+                        <div class="py-2 px-3">
+                            <h5>
+                                <div class="row">
+                                    <div class="col">{{ review.username }}</div>
+                                    <div class="col text-end">
+                                        {% if review.rating == 5 %}
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        {% endif %}
+                                        {% if review.rating == 4 %}
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        {% endif %}
+                                        {% if review.rating == 3 %}
+                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                        {% endif %}
+                                        {% if review.rating == 2 %}<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>{% endif %}
+                                        {% if review.rating == 1 %}<i class="fa-solid fa-star"></i>{% endif %}
+                                    </div>
+                                </div>
+                            </h5>
+                            <hr />
+                            <a href="#"
+                               class="link-custom"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#review_{{ review.id }}_collapse">{{ review.text|truncatechars:40 }}</a>
+                            <div class="collapse" id="review_{{ review.id }}_collapse">
+                                <div class="card p-4 mt-2"
+                                     style="background-color: #022a30;
+                                            color: #b6cbce">{{ review.text }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% include "inc/pagination.html" %}
+    {% endif %}
+{% endblock content %}

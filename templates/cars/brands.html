@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+{% block title %}
+    {% trans "Brands" %}
+{% endblock title %}
+{% block content %}
+    {% for brand in object_list %}
+        {% if forloop.first %}<div class="row justify-content-center">{% endif %}
+            <div class="col-lg-8 g-3 mt-0 mb-3 col-xl-2">
+                <a href="#" class="text-dark text-decoration-none">
+                    <div class="card-custom bg-base shadow-effect rounded-4 text-center">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-custom-image rounded-4 my-4">
+                                    <img src="{{ brand.logo.url }}"
+                                         class="rounded-4"
+                                         width="150"
+                                         height="150"
+                                         alt="{{ brand.name }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% if forloop.counter|divisibleby:6 %}
+            </div>
+            <div class="row">
+            {% endif %}
+            {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+{% endblock content %}

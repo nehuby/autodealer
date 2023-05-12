@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags humanize %}
+{% block title %}
+    {% trans "Cars" %}
+{% endblock title %}
+{% block content %}
+    {% for car in object_list %}
+        {% if forloop.first %}<div class="row justify-content-center">{% endif %}
+            <div class="col-lg-8 gy-3 g-3 mt-0 mb-3 col-xl-4">
+                <div class="card-custom bg-base shadow-effect rounded-4 text-center">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-custom-image rounded-4 mt-3">
+                                <img src="{{ car.photo_set.first.photo.url }}"
+                                     class="rounded-4"
+                                     width="400"
+                                     height="250"
+                                     alt="{{ car.name }}" />
+                            </div>
+                            <div class="card-custom-content p-4">
+                                <h4>{{ car.car_brand.name }} {{ car.car_model }}</h4>
+                                <p>
+                                    {{ car.price|intcomma }} <i class="fa-solid fa-ruble-sign"></i>
+                                </p>
+                                <a href="{% url 'car' car.id %}" class="link-custom">{% trans "See more" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+            </div>
+            <div class="row">
+            {% endif %}
+            {% if forloop.last %}</div>{% endif %}
+    {% endfor %}
+{% endblock content %}
